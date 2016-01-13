@@ -56,6 +56,7 @@ module RailsAdmin
         # Load fields for all associations (relations)
         parent.abstract_model.associations.select { |a| a.type != :belongs_to }.each do |association| # :belongs_to are created by factory for belongs_to fields
           # Unless a previous factory has already loaded current field as well
+          debugger
           next if fields.detect { |f| f.name == association.name }
           # Loop through factories until one returns true
           @@registry.detect { |factory| factory.call(parent, association, fields) }

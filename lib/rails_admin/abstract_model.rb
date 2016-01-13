@@ -50,6 +50,8 @@ module RailsAdmin
         initialize_active_record
       elsif ancestors.include?('Mongoid::Document')
         initialize_mongoid
+      elsif ancestors.include?('Cequel::Record')
+        initialize_cequel_record
       end
     end
 
@@ -109,6 +111,12 @@ module RailsAdmin
       @adapter = :mongoid
       require 'rails_admin/adapters/mongoid'
       extend Adapters::Mongoid
+    end
+
+    def initialize_cequel_record
+      @adapter = :cequel_record
+      require 'rails_admin/adapters/cequel_record'
+      extend Adapters::CequelRecord
     end
 
     def parse_field_value(field, value)
